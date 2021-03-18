@@ -8,3 +8,5 @@ mydb = mysql.connector.connect(
 cursor = mydb.cursor()
 cursor.execute('CREATE DATABASE IF NOT EXISTS PythonPassUtils')
 cursor.execute('USE PythonPassUtils')
+# Works TODO Get and insert
+mydb.close()
