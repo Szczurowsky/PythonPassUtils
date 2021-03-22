@@ -9,3 +9,4 @@ class ObjectController:
     def add_object(self):
         print(self.db_type)
         print(self.name)
+        print(self.password)

@@ -20,8 +20,7 @@ def startup():
         __result = input('Do you want to save your password? y/n')
         if __result == "yes" or __result == "y":
             name = input('How do you want to call it? \n')
-            print(name, generated_password)
-            password = ObjectController(config.check_dbtype(), 'Name', 'test')
+            password = ObjectController(config.check_dbtype(), name, generated_password)
             print(password.add_object())
         else:
             pass
