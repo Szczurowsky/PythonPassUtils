@@ -1,5 +1,3 @@
-import config
-import logging
 
 
 class ObjectController:
@@ -11,4 +9,3 @@ class ObjectController:
     def add_object(self):
         print(self.db_type)
         print(self.name)
-
