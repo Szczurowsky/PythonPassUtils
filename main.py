@@ -1,5 +1,6 @@
 from hash import Hash
 from logo import generate_logo
+from dbController import ObjectController
 import config
 import logging
 
@@ -20,6 +21,8 @@ def startup():
         if __result == "yes" or __result == "y":
             name = input('How do you want to call it? \n')
             print(name, generated_password)
+            password = ObjectController(config.check_dbtype(), 'Name', 'test')
+            print(password.add_object())
         else:
             pass
 
