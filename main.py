@@ -51,7 +51,7 @@ def startup():
                         print('Deleted successfully')
                         __do = input('Do you want to delete something else? y/n \n')
                         if __do == 'yes' or 'Yes':
-                            i = 1
+                            pass
                         if __do == 'no' or 'No':
                             i = 0
                             startup()
