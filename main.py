@@ -6,31 +6,66 @@ import logging
 
 
 def startup():
-    operation = input('What you want to do? \n 1 - Generate password \n 2 - Read passwords \n')
+    operation = input('What you want to do? \n 1 - Generate password \n 2 - Read passwords \n 3 - Exit \n')
     try:
         result = int(operation)
     except Exception as e:
         logging.info(e)
         print('Wrong character! \n')
         return startup()
-    if result == int(1) or result == int(2):
+    if result == int(1) or result == int(2) or result == int(3):
         if result == int(1):
             generate = Hash(0, 16)
             generated_password = generate()
             print('Your generated password is:', generated_password)
-            __result = input('Do you want to save your password? y/n')
+            __result = input('Do you want to save your password? y/n\n')
             if __result == "yes" or __result == "y":
                 name = input('How do you want to call it? \n')
                 password = ObjectController(config.check_dbtype(), name, generated_password)
                 if password.add_object():
-                    pass
+                    startup()
                 else:
                     print(password.add_object())
             else:
-                pass
-        else:
+                startup()
+        elif result == int(2):
             password = ObjectController(config.check_dbtype(), None, None)
             password.show_objects()
+            __action = input('\nType exit to back to the menu \nType remove to remove any password '
+                             '\nType update to update password\n')
+            print(__action)
+            if __action == 'exit':
+                startup()
+            if __action == 'remove':
+                i = 1
+                while i == 1:
+                    print(i)
+                    __ID = input('Type ID of password\n')
+                    try:
+                        __ID = int(__ID)
+                    except Exception as e:
+                        logging.info(e)
+                        print('Wrong character! \n')
+                        return startup()
+                    if password.remove_objects(__ID):
+                        print('Deleted successfully')
+                        __do = input('Do you want to delete something else? y/n \n')
+                        if __do == 'yes' or 'Yes':
+                            i = 1
+                        if __do == 'no' or 'No':
+                            i = 0
+                            startup()
+                        else:
+                            i = 0
+                            startup()
+                    else:
+                        print(password.remove_objects(__ID))
+                        return startup()
+            if __action == 'update':
+                pass
+        else:
+            pass
+
     else:
         print('Wrong operation! \n')
         return startup()

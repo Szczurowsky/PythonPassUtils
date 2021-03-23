@@ -8,6 +8,31 @@ class ObjectController:
         self.name = name
         self.password = password
 
+    def remove_objects(self, object_id):
+        if self.db_type == int(2):
+            db = mysql.connector.connect(
+                host="localhost",
+                user="root",
+                password=""
+            )
+            cursor = db.cursor()
+            cursor.execute('CREATE DATABASE IF NOT EXISTS PythonPassUtils')
+            cursor.execute('USE PythonPassUtils')
+            db.close()
+        if self.db_type == int(1):
+            try:
+                conn = sqlite3.connect('PythonPassUtils.sqlite')
+            except Exception as e:
+                return e
+            c = conn.cursor()
+            c.execute('''CREATE TABLE IF NOT EXISTS password
+                         (id integer PRIMARY KEY, name TEXT, password TEXT)''')
+            object_id = int(object_id)
+            c.execute('''DELETE FROM password WHERE ID = ?;''', (object_id,))
+            conn.commit()
+            conn.close()
+            return True
+
     def show_objects(self):
         if self.db_type == int(2):
             db = mysql.connector.connect(
@@ -26,12 +51,15 @@ class ObjectController:
                 return e
             c = conn.cursor()
             c.execute('''CREATE TABLE IF NOT EXISTS password
-                         (name TEXT, password TEXT)''')
+                         (id integer PRIMARY KEY, name TEXT, password TEXT)''')
             try:
                 c.execute('''SELECT * FROM password''')
                 rows = c.fetchall()
+                print('========== Passwords ==========')
+                print('ID Name Password')
                 for row in rows:
                     print(row)
+                print('========== Passwords ==========')
                 conn.close()
                 return True
             except Exception as e:
@@ -55,8 +83,8 @@ class ObjectController:
                 return e
             c = conn.cursor()
             c.execute('''CREATE TABLE IF NOT EXISTS password
-                         (name TEXT, password TEXT)''')
-            c.execute('''INSERT INTO password VALUES(?, ?)''', (self.name, self.password))
+                         (id integer PRIMARY KEY, name TEXT, password TEXT)''')
+            c.execute('''INSERT INTO password VALUES(?, ?, ?)''', (None, self.name, self.password))
             conn.commit()
             conn.close()
             return True
