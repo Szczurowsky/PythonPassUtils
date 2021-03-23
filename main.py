@@ -5,6 +5,8 @@ import config
 import logging
 
 
+# TODO add MySQL Functionality
+
 def startup():
     operation = input('What you want to do? \n 1 - Generate password \n 2 - Read passwords \n 3 - Exit \n')
     try:
@@ -15,7 +17,24 @@ def startup():
         return startup()
     if result == int(1) or result == int(2) or result == int(3):
         if result == int(1):
-            generate = Hash(0, 16)
+            strength = input('Choose strength of password? '
+                             '\n 0 -  Only letters (low)'
+                             '\n 1 - Letters mixed with numbers(medium) '
+                             '\n 2 - Letters mixed with numbers and special characters(high) \n')
+            try:
+                strength = int(strength)
+            except Exception as e:
+                logging.info(e)
+                print('Wrong character! \n')
+                return startup()
+            length = input('Type wanted length of password \n')
+            try:
+                length = int(length)
+            except Exception as e:
+                logging.info(e)
+                print('Wrong character! \n')
+                return startup()
+            generate = Hash(strength, length)
             generated_password = generate()
             print('Your generated password is:', generated_password)
             __result = input('Do you want to save your password? y/n\n')
