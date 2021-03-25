@@ -27,6 +27,9 @@ def startup():
                 logging.info(e)
                 print('Wrong character! \n')
                 return startup()
+            if strength is not 0 or strength is not 1 or strength is not 2:
+                print('Type is not 0/1/2')
+                startup()
             length = input('Type wanted length of password \n')
             try:
                 length = int(length)
