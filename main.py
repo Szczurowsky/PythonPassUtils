@@ -5,17 +5,22 @@ import config
 import logging
 
 
-# TODO add MySQL Functionality
-
 def startup():
-    operation = input('What you want to do? \n 1 - Generate password \n 2 - Read passwords \n 3 - Exit \n')
+    operation = input('What you want to do? \n 1 - Generate password \n 2 - Read passwords \n 3 - Add password\n 4 - '
+                      'Exit \n')
     try:
         result = int(operation)
     except Exception as e:
         logging.info(e)
         print('Wrong character! \n')
         return startup()
-    if result == int(1) or result == int(2) or result == int(3):
+    if result == int(1) or result == int(2) or result == int(3) or result == int(4):
+        if result == int(3):
+            name = input('Type name of password\n')
+            generated_password = input('Type password\n')
+            password = ObjectController(config.check_dbtype(), name, generated_password)
+            if password.add_object():
+                startup()
         if result == int(1):
             strength = input('Choose strength of password? '
                              '\n 0 -  Only letters (low)'
@@ -27,9 +32,9 @@ def startup():
                 logging.info(e)
                 print('Wrong character! \n')
                 return startup()
-            if strength is not 0 or strength is not 1 or strength is not 2:
-                print('Type is not 0/1/2')
-                startup()
+            if strength != 1 and strength != 0 and strength != 2:
+                print('Typed number is not 0/1/2')
+                return startup()
             length = input('Type wanted length of password \n')
             try:
                 length = int(length)
@@ -58,6 +63,32 @@ def startup():
             print(__action)
             if __action == 'exit':
                 startup()
+            if __action == 'update':
+                i = 1
+                while i == 1:
+                    print(i)
+                    __ID = input('Type ID of password\n')
+                    try:
+                        __ID = int(__ID)
+                    except Exception as e:
+                        logging.info(e)
+                        print('Wrong character! \n')
+                        return startup()
+                    passwd = input('Type new password \n')
+                    if password.update_objects(passwd, __ID):
+                        print('Updated successfully')
+                        __do = input('Do you want to update something else? y/n \n')
+                        if __do == 'yes' or 'Yes':
+                            pass
+                        if __do == 'no' or 'No':
+                            i = 0
+                            startup()
+                        else:
+                            i = 0
+                            startup()
+                    else:
+                        print(password.update_objects(passwd, __ID))
+                        return startup()
             if __action == 'remove':
                 i = 1
                 while i == 1:
@@ -83,8 +114,6 @@ def startup():
                     else:
                         print(password.remove_objects(__ID))
                         return startup()
-            if __action == 'update':
-                pass
         else:
             pass
 

@@ -11,7 +11,7 @@ config['config'].append({
 
 def startup_check():
     if os.path.isfile('config.json') and os.access('config.json', os.R_OK):
-        print("File exists and is readable")
+        print("Loaded config file")
     else:
         print("Either file is missing or is not readable, creating file...")
         with io.open(os.path.join('config.json', 'config.json'), 'w') as db_file:
