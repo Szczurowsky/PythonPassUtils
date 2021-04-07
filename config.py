@@ -3,6 +3,7 @@ import json
 import os
 
 config = {'config': []}
+# TODO Encrypt password will be added, probably c:
 config['config'].append({
     'DefaultSaveMethod': 'sqlite',
     'EncryptPassword': 'no',
