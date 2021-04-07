@@ -15,7 +15,7 @@ def startup_check():
         print("Loaded config file")
     else:
         print("Either file is missing or is not readable, creating file...")
-        with io.open(os.path.join('config.json', 'config.json'), 'w') as db_file:
+        with io.open(os.path.join('', 'config.json'), 'w') as db_file:
             db_file.write(json.dumps(config))
 
 
